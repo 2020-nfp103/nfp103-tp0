@@ -4,6 +4,8 @@ https://www.gnu.org/licenses/lgpl-3.0.fr.html
  */
 package lb.edu.isae.nfp103.tp0;
 
+import java.util.concurrent.Semaphore;
+
 /**
  *
  * @author Pascal Fares <pascal.fares at cofares.net>
@@ -11,13 +13,28 @@ package lb.edu.isae.nfp103.tp0;
 public class Data {
 
     private int x = 0;
+    Semaphore s = new Semaphore(1); 
 
     public void inc() {
-        x = x + 1;
+        try{
+            s.acquire();
+            x = x + 1;
+            s.release();
+        }catch(InterruptedException e){
+            
+        }
+        
+        
     }
 
     public void dec() {
-        x = x - 1;
+        try{
+            s.acquire();
+            x = x - 1;
+            s.release();
+        }catch(InterruptedException e){
+            
+        }
     }
     
     @Override
